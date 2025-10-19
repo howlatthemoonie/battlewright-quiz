@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>The Battlewright Role Quiz</title>
+<style>
+  body { font-family: "Georgia", serif; background:#0e0e0f; color:#e8e3dc; line-height:1.6; padding:2rem; max-width:800px; margin:auto; }
+  h1 { text-align:center; letter-spacing:1px; }
+  fieldset { border:1px solid #444; margin-bottom:1.5rem; padding:1rem; border-radius:6px; }
+  legend { font-weight:bold; color:#f2c36b; }
+  label { display:block; margin:6px 0; cursor:pointer; }
+  button { display:block; margin:2rem auto; padding:0.75rem 1.5rem; border:none; background:#f2c36b; color:#0e0e0f; font-weight:bold; cursor:pointer; border-radius:6px; }
+  #result { text-align:center; margin-top:2rem; font-size:1.1rem; line-height:1.8; }
+</style>
+</head>
+<body>
+<h1>⚔️ The Battlewright Role Quiz</h1>
+<p style="text-align:center"><em>"Every fighter has a rhythm. Let’s see which one hums in your bones."</em></p>
+
+<form id="quizForm">
+  <fieldset>
+    <legend>1. When a fight breaks out, what’s your first instinct?</legend>
+    <label><input type="radio" name="q1" value="A"> Charge in before they can think — end it fast.</label>
+    <label><input type="radio" name="q1" value="B"> Step forward to cover your allies — protect first.</label>
+    <label><input type="radio" name="q1" value="C"> Look around and keep everyone calm — plan before panic.</label>
+    <label><input type="radio" name="q1" value="D"> Circle wide — find a smarter way to win.</label>
+  </fieldset>
+
+  <fieldset>
+    <legend>2. How do you handle pressure?</legend>
+    <label><input type="radio" name="q2" value="A"> I thrive on it — that’s when I’m sharpest.</label>
+    <label><input type="radio" name="q2" value="B"> I endure it — I’d rather carry it than see others struggle.</label>
+    <label><input type="radio" name="q2" value="C"> I diffuse it — I make sure no one breaks.</label>
+    <label><input type="radio" name="q2" value="D"> I twist it — pressure makes people predictable.</label>
+  </fieldset>
+
+  <fieldset>
+    <legend>3. What kind of strength do you value most?</legend>
+    <label><input type="radio" name="q3" value="A"> The power to act first.</label>
+    <label><input type="radio" name="q3" value="B"> The patience to stand firm.</label>
+    <label><input type="radio" name="q3" value="C"> The compassion to heal others.</label>
+    <label><input type="radio" name="q3" value="D"> The cunning to adapt and surprise.</label>
+  </fieldset>
+
+  <fieldset>
+    <legend>4. You’re losing ground in a fight. What do you do?</legend>
+    <label><input type="radio" name="q4" value="A"> Push harder — I refuse to fall back.</label>
+    <label><input type="radio" name="q4" value="B"> Hold formation — we fall together or not at all.</label>
+    <label><input type="radio" name="q4" value="C"> Rally the others — a steady word can turn fear into fire.</label>
+    <label><input type="radio" name="q4" value="D"> Change the rules — chaos is just another weapon.</label>
+  </fieldset>
+
+  <fieldset>
+    <legend>5. Which description fits your combat style?</legend>
+    <label><input type="radio" name="q5" value="A"> Aggressive and fast — I move first and think later.</label>
+    <label><input type="radio" name="q5" value="B"> Calculated and firm — I don’t move unless it’s needed.</label>
+    <label><input type="radio" name="q5" value="C"> Balanced and aware — I play off my team’s rhythm.</label>
+    <label><input type="radio" name="q5" value="D"> Elusive and creative — I fight where they least expect.</label>
+  </fieldset>
+
+  <fieldset>
+    <legend>6. What do you fear most in battle?</legend>
+    <label><input type="radio" name="q6" value="A"> Hesitation — the moment you think is the moment you lose.</label>
+    <label><input type="radio" name="q6" value="B"> Failing the ones I protect.</label>
+    <label><input type="radio" name="q6" value="C"> Watching someone fall when I could’ve helped.</label>
+    <label><input type="radio" name="q6" value="D"> Being predictable — that’s the same as being dead.</label>
+  </fieldset>
+
+  <fieldset>
+    <legend>7. What kind of teammate are you?</legend>
+    <label><input type="radio" name="q7" value="A"> The spark — I get things moving.</label>
+    <label><input type="radio" name="q7" value="B"> The anchor — I keep everyone grounded.</label>
+    <label><input type="radio" name="q7" value="C"> The heart — I hold the group together.</label>
+    <label><input type="radio" name="q7" value="D"> The wildcard — I turn losses into chances.</label>
+  </fieldset>
+
+  <fieldset>
+    <legend>8. After the battle, you’re the one who...</legend>
+    <label><input type="radio" name="q8" value="A"> Checks your blade before your wounds.</label>
+    <label><input type="radio" name="q8" value="B"> Counts heads to make sure no one’s missing.</label>
+    <label><input type="radio" name="q8" value="C"> Helps patch the others up.</label>
+    <label><input type="radio" name="q8" value="D"> Laughs, learns, and writes down what worked.</label>
+  </fieldset>
+
+  <button type="button" onclick="calculateResult()">See My Role</button>
+</form>
+
+<div id="result"></div>
+
+<script>
+function calculateResult() {
+  const answers = document.querySelectorAll('input[type=radio]:checked');
+  if (answers.length < 8) {
+    alert("Answer all questions before continuing!");
+    return;
+  }
+
+  const counts = {A:0, B:0, C:0, D:0};
+  answers.forEach(a => counts[a.value]++);
+
+  const max = Math.max(...Object.values(counts));
+  const top = Object.keys(counts).find(k => counts[k] === max);
+  const result = document.getElementById("result");
+
+  const roles = {
+    A: {
+      title: "⚔️ The Striker — The Blade",
+      text: "You’re the edge that starts every battle. Fast, fearless, and fierce — but remember, control is sharper than any blade."
+    },
+    B: {
+      title: "🛡️ The Defender — The Wall",
+      text: "You are the wall that won’t move. Loyal, patient, and steady — your courage keeps others standing."
+    },
+    C: {
+      title: "💠 The Support — The Heart",
+      text: "You’re the pulse of the group. Quiet strength and perfect timing — you make others greater by being present."
+    },
+    D: {
+      title: "🜂 The Specialist — The Shadow",
+      text: "You’re the unpredictable one. Cunning, adaptive, a storm in human form — you win by rewriting the rules."
+    }
+  };
+
+  result.innerHTML = `<h2>${roles[top].title}</h2><p>${roles[top].text}</p>`;
+}
+</script>
+</body>
+</html>
