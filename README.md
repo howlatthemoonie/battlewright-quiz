@@ -1,1 +1,1 @@
-# battlewright-quiz
+# The BattleWright Quiz
